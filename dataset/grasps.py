@@ -43,6 +43,14 @@ class GraspsClass(InMemoryDataset):
       self.class_weights[self.data['y'][i]] += 1
     self.class_weights /= len(self.data['y'])
 
+    def _load_data(self):
+        if self.csvs:
+            print("Cargando datos desde CSV...")
+            self.m_grasps = pd.read_csv(self.csvs[0])  # Carga el primer archivo CSV
+            print("Datos cargados correctamente:", self.m_grasps.head())
+        else:
+            raise ValueError("No se proporcionaron archivos CSV.")
+
   @property
   def raw_file_names(self):
     if (self.split == "train"):
@@ -175,10 +183,3 @@ class GraspsClass(InMemoryDataset):
 
     return sample_
 
-def _load_data(self):
-    if self.csvs:
-        print("Cargando datos desde CSV...")
-        self.m_grasps = pd.read_csv(self.csvs[0])
-        print("Datos cargados correctamente:", self.m_grasps.head())
-    else:
-        raise ValueError("No se proporcionaron archivos CSV.")
