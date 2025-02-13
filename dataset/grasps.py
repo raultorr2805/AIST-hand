@@ -31,9 +31,10 @@ class GraspsClass(InMemoryDataset):
     self.normalize = normalize
     self.mins = []
     self.maxs = []
+    self.m_grasps = None  # Inicializa m_grasps
 
     super(GraspsClass, self).__init__(root, transform, pre_transform)
-
+    self._load_data()  # Llama a un método para cargar los datos
     self.data, self.slices = torch.load(self.processed_paths[0])
 
     # Compute class weights for sampling
@@ -174,4 +175,10 @@ class GraspsClass(InMemoryDataset):
 
     return sample_
 
-
+def _load_data(self):
+    if self.csvs:
+        print("Cargando datos desde CSV...")
+        self.m_grasps = pd.read_csv(self.csvs[0])
+        print("Datos cargados correctamente:", self.m_grasps.head())
+    else:
+        raise ValueError("No se proporcionaron archivos CSV.")
